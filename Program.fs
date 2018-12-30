@@ -71,9 +71,7 @@ let mainCommand () =
 
         let manaba = new Manaba(setting.id, setting.pw)
 
-        match code with
-        | Some code -> manaba.attend code
-        | None _ -> ()
+        Option.map (fun code -> manaba.attend code) code |> ignore
 
         if fetch then
           manaba.activeReports ()

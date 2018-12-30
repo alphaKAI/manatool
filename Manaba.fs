@@ -134,12 +134,11 @@ type Manaba(id: string, pw: string) =
       this.getReports ()
       |> Set.filter (fun x ->
         let now = DateTime.Now
-        let l = x.begin_date <= now
         match x.end_date with
         | Some ed ->
           // 提出期限が365日以上先の課題は常識的に考えて除外して良い
           if ed <= now.Add (TimeSpan.FromDays 365.) then
-            l && now <= ed
+            x.begin_date <= now && now <= ed
           else
             false
           // 終了期限が設定されてないのも除外
