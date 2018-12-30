@@ -7,6 +7,7 @@ open OpenQA.Selenium.Firefox
 open OpenQA.Selenium
 open FSharp.Scanf
 open MyUtil
+open System.Text.RegularExpressions
 
 let manaba_url = "http://manaba.tsukuba.ac.jp/"
 let attend_url = "https://atmnb.tsukuba.ac.jp/attend/tsukuba?lang=ja"
@@ -104,7 +105,9 @@ type Manaba(id: string, pw: string) =
     let row1 = tbody.FindElements(By.ClassName("row1"))
 
     let parse_report text =
-      let splitted = String.split '\n' text
+      let splitted =
+        String.filter (fun c -> c <> '\r') text
+        |> String.split '\n'
       let (begin_date, end_date) =
         trySscanf "%d-%d-%d %d:%d %d-%d-%d %d:%d" splitted.[3]
         |> function
