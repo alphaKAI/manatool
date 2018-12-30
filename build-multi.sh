@@ -47,6 +47,13 @@ function warpping() {
   warp-packer --arch macos-x64 --input_dir bin/Release/netcoreapp2.2/osx-x64/publish --exec $exec_name --output $out_name.macos
 }
 
+function zipping() {
+  zip manatool-win64.zip manatool-single.exe
+  zip manatool-linux64.zip manatool-single.linux
+  zip manatool-mac.zip manatool-single.macos
+}
+
 build_scd
 download_and_copy_driver
 warpping
+zipping
